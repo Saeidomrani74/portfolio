@@ -1,7 +1,7 @@
 [ava.md](https://github.com/user-attachments/files/34212027/ava.md)
 # AVA: Case Study
 
-**Role:** the only Flutter developer. I built the Flutter client and all of its features myself: discovery, forum, dashboard, chat, and more.
+**Role:** the only Flutter developer. I built the Flutter client.
 **Stack:** Flutter, Dio, SignalR, Riverpod, `flutter_secure_storage`, Hive.
 **Team:** two backend developers, one UX designer, one UI designer, one team lead. Duration: three months.
 
