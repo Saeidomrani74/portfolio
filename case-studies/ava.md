@@ -17,11 +17,13 @@ AVA is a digital oral and dental healthcare platform. The product goal was to ma
 
 ## Decisions
 
+The central HTTP layer, the app setup and the secure storage code were first written by a colleague (initial commit, 20 August 2024). The decisions below describe the codebase; my own change to the HTTP layer is the path normalization in the example.
+
 1. **Feature-based architecture with Riverpod providers, repositories, models, and reusable widgets.** It separated API, state, and presentation concerns as the product grew. Trade-off: more structure and boilerplate for smaller screens.
 2. **One central HTTP layer** in `lib/core/network/api_service.dart`: path normalization, multipart uploads, response parsing, error handling, and token-aware requests. Inconsistent request behavior was risky across many healthcare workflows. Trade-off: every endpoint implementation had to follow the shared API response contract.
 3. **Persian and RTL configured at the application level** in `lib/core/app/app.dart`. Retrofitting directionality later would have caused widespread UI defects. Trade-off: some icons and custom components needed manual directional adjustments.
 
-**A concrete example.** Before path normalization, some callers passed API paths without a leading slash and others passed paths with one. With a base URL ending in `/v1`, passing `account/family-member` could produce `/v1account/family-member` instead of `/v1/account/family-member`. That caused a 404 response, while `/auth/login` worked correctly. I fixed this in the private method `ApiService._normalizePath`, which adds a leading slash to relative paths and leaves absolute URLs unchanged.
+**A concrete example (precaution).** Some request paths have no leading slash, for example `account/family-member`. On 3 September 2026 I added the private method `ApiService._normalizePath`, which root-anchors relative paths and leaves absolute `http` and `https` URLs unchanged. The `get`, `post`, `put` and `delete` methods call it. I added it as prevention; I did not see a failed request before it.
 
 ## Result
 
