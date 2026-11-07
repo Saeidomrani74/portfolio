@@ -1,9 +1,9 @@
 # AVA: Case Study
 
-**Role:** Flutter developer. I extended and redesigned the Flutter client, which started from an earlier version written by a colleague.
-**My work:** redesigned the home page, login screen and chat page; added a professional dashboard, forum pages, a stories provider, banners, OTP input and resend widgets, chat routes and a chat-rules checkbox.
-**Stack:** Flutter, Dio, SignalR, Riverpod, `flutter_secure_storage`, Hive.
-**Team:** two backend developers, one UX designer, one UI designer, one team lead. Duration: three months.
+- **Role:** the Flutter developer. I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad.
+- **My work:** redesigned the home page, login screen and chat page; added a professional dashboard, forum pages, a stories provider, banners, OTP input and resend widgets, chat routes and a chat-rules checkbox.
+- **Stack:** Flutter, Dio, SignalR, Riverpod, `flutter_secure_storage`, Hive.
+- **Team:** two backend developers, one UX designer, one UI designer, one team lead. Duration: three months.
 
 ## Problem
 
@@ -11,19 +11,21 @@ AVA is a digital oral and dental healthcare platform. The product goal was to ma
 
 ## Constraints
 
-- **Architecture:** I extended and redesigned the Flutter client, which communicates with a REST backend through Dio and supports real-time communication through SignalR. The backend was built by two colleagues.
+- **Architecture:** I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad. The client communicates with a REST backend through Dio and supports real-time communication through SignalR. The backend was built by two colleagues.
 - **Language:** Persian was the primary language: `fa_IR`, RTL layouts, Persian fonts, Persian date handling, and direction-aware UI, implemented in `lib/core/app/app.dart` and the shared UI components.
 - **Privacy:** the app handles personal and medical information. The authentication token is stored through `flutter_secure_storage` in `lib/core/storage/secure_storage.dart`, and authorization values are masked when failed requests are described in `lib/core/network/api_service.dart`.
 
 ## Decisions
 
-The central HTTP layer, the app setup and the secure storage code were first written by a colleague (initial commit, 20 August 2024). The decisions below describe the codebase; my own change to the HTTP layer is the path normalization in the example.
+The central HTTP layer, the app setup and the secure storage code were first written by a colleague (initial commit, 20 August 2024). The decisions below describe the codebase; my own changes to the HTTP layer are the path normalization and the no-cache fix, described in the two examples.
 
 1. **Feature-based architecture with Riverpod providers, repositories, models, and reusable widgets.** It separated API, state, and presentation concerns as the product grew. Trade-off: more structure and boilerplate for smaller screens.
 2. **One central HTTP layer** in `lib/core/network/api_service.dart`: path normalization, multipart uploads, response parsing, error handling, and token-aware requests. Inconsistent request behavior was risky across many healthcare workflows. Trade-off: every endpoint implementation had to follow the shared API response contract.
 3. **Persian and RTL configured at the application level** in `lib/core/app/app.dart`. Retrofitting directionality later would have caused widespread UI defects. Trade-off: some icons and custom components needed manual directional adjustments.
 
 **A concrete example (precaution).** Some request paths have no leading slash, for example `account/family-member`. On 3 September 2026 I added the private method `ApiService._normalizePath`, which root-anchors relative paths and leaves absolute `http` and `https` URLs unchanged. The `get`, `post`, `put` and `delete` methods call it. I added it as prevention; I did not see a failed request before it.
+
+**A second example.** Reviewing my own code later, I found two problems in the no-cache headers I had added on 21 May 2025 (`733da63`): when the caller passed no options, no no-cache headers were sent, and when the caller passed options, my code replaced the caller's headers. Both problems affected four request methods, not only `get`. I fixed both with a helper, `_noCache`, which returns a new `Options` object and lets the caller's headers override the defaults. The fix and its two tests (no-cache headers sent without caller options; caller headers preserved) are in commit `f5ddaa1` of 7 November 2026, and the tests passed that day.
 
 ## Result
 
