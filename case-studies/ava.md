@@ -3,7 +3,7 @@
 - **Role:** the Flutter developer. I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad.
 - **My work:** redesigned the home page, login screen and chat page; added a professional dashboard, forum pages, a stories provider, banners, OTP input and resend widgets, chat routes and a chat-rules checkbox.
 - **Stack:** Flutter, Dio, SignalR, Riverpod, `flutter_secure_storage`, Hive.
-- **Team:** two backend developers, one UX designer, one UI designer, one team lead. Duration: three months.
+- **Team:** two backend developers, one UX designer, one UI designer, one team lead. I worked with them throughout my time on the project; the final three months (July-September 2026) were a redesign.
 
 ## Problem
 
