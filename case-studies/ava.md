@@ -1,6 +1,6 @@
 # AVA: Case Study
 
-- **Role:** the Flutter developer. I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad.
+- **Role:** A Flutter developer. I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad.
 - **My work:** redesigned the home page, login screen and chat page; added a professional dashboard, forum pages, a stories provider, banners, OTP input and resend widgets, chat routes and a chat-rules checkbox.
 - **Stack:** Flutter, Dio, SignalR, Riverpod, `flutter_secure_storage`, Hive.
 - **Team:** two backend developers, one UX designer, one UI designer, one team lead. I worked with them throughout my time on the project; the final three months (July-September 2026) were a redesign.
@@ -11,7 +11,7 @@ AVA is a digital oral and dental healthcare platform. The product goal was to ma
 
 ## Constraints
 
-- **Architecture:** I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad. The client communicates with a REST backend through Dio and supports real-time communication through SignalR. The backend was built by two colleagues.
+- **Architecture:** I extended and redesigned the Flutter client, which started from an earlier version by Pouya Barfinezhad. The client communicates with a REST backend through Dio and includes SignalR code for real-time updates but it is not tested end to end. The backend was built by two colleagues.
 - **Language:** Persian was the primary language: `fa_IR`, RTL layouts, Persian fonts, Persian date handling, and direction-aware UI, implemented in `lib/core/app/app.dart` and the shared UI components.
 - **Privacy:** the app handles personal and medical information. The authentication token is stored through `flutter_secure_storage` in `lib/core/storage/secure_storage.dart`, and authorization values are masked when failed requests are described in `lib/core/network/api_service.dart`.
 
@@ -29,8 +29,8 @@ The central HTTP layer, the app setup and the secure storage code were first wri
 
 ## Result
 
-- **What shipped:** AVA was released as a Flutter web app at `ava.smartwellness.ir`. I also built an Android APK and installed it on one device (Poco F5). The Android build was not distributed.
-- **What was tested:** the web release in Chrome. The Android build was installed but not functionally tested. iOS was not tested.
+- **What shipped:** AVA was released as a Flutter web app, but the web app is currently offline (12 Nov 2026). I also built an Android APK and installed it on one device (Poco F5). The Android build was not distributed.
+- **What was tested:** The Android build was installed but not functionally tested. iOS was not tested.
 - **What I can show:** screenshots with demo data and a 60-90 second video are in progress as of 30 October 2026. The code is in a private repository and is available on request. The repository was scanned with `gitleaks` (`git` and `dir` modes) on 30 October 2026: no findings.
-- **Measured number:** 116 endpoint operations are documented in `API/api_catalog.md` (counted on 30 October 2026). This is a documentation count, not a claim that all 116 are used in the released app.
+- **Measured number:** 116 endpoint operations are documented in `API/api_catalog.md` (counted on 30 October 2026). This is a documentation count, not a claim that all 116 are used in the app.
 - **What I would do differently:** I would introduce automated integration tests and API contract checks earlier, so regressions are detected before manual end-to-end verification.
